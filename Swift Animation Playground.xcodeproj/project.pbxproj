@@ -85,7 +85,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 5A70A45F2EEC24E000045F74 /* Build configuration list for PBXProject "AnimationDemo" */;
+			buildConfigurationList = 5A70A45F2EEC24E000045F74 /* Build configuration list for PBXProject "Swift Animation Playground" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -320,7 +320,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5A70A45F2EEC24E000045F74 /* Build configuration list for PBXProject "AnimationDemo" */ = {
+		5A70A45F2EEC24E000045F74 /* Build configuration list for PBXProject "Swift Animation Playground" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5A70A46D2EEC24E100045F74 /* Debug */,
