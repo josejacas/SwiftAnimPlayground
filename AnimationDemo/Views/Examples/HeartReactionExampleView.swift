@@ -19,17 +19,61 @@ struct HeartReactionExampleView: View {
 
     private let example = ExampleType.heartReaction
 
+    private var simplifiedCode: String {
+        let popCode = popAnimationType.codeString(with: popParameters)
+        let settleCode = settleAnimationType.codeString(with: settleParameters)
+        let popDuration = String(format: "%.2f", popParameters["duration"] ?? 0.25)
+        return """
+        struct HeartButton: View {
+            @State private var isLiked = false
+            @State private var scale: CGFloat = 1.0
+
+            var body: some View {
+                Image(systemName: isLiked ? "heart.fill" : "heart")
+                    .font(.system(size: 32))
+                    .foregroundStyle(isLiked ? .red : .gray)
+                    .scaleEffect(scale)
+                    .onTapGesture {
+                        triggerAnimation()
+                    }
+            }
+
+            func triggerAnimation() {
+                isLiked.toggle()
+
+                // Stage 1: Pop
+                withAnimation(\(popCode)) {
+                    scale = isLiked ? 1.3 : 0.8
+                }
+
+                // Stage 2: Settle back to normal
+                DispatchQueue.main.asyncAfter(deadline: .now() + \(popDuration)) {
+                    withAnimation(\(settleCode)) {
+                        scale = 1.0
+                    }
+                }
+            }
+        }
+        """
+    }
+
     var body: some View {
         VStack(spacing: 16) {
             // Title and description
-            VStack(spacing: 6) {
-                Text(example.rawValue)
-                    .font(.title2)
-                    .fontWeight(.bold)
+            HStack(alignment: .top) {
+                VStack(spacing: 6) {
+                    Text(example.rawValue)
+                        .font(.title2)
+                        .fontWeight(.bold)
 
-                Text(example.description)
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    Text(example.description)
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
+
+                Spacer()
+
+                ViewCodeButton(title: "\(example.rawValue) Example", code: simplifiedCode)
             }
 
             // Interactive animation area

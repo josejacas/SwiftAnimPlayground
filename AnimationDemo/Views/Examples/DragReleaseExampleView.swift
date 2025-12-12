@@ -13,11 +13,43 @@ struct DragReleaseExampleView: View {
 
     private let example = ExampleType.dragRelease
 
+    private var simplifiedCode: String {
+        let animCode = animationType.codeString(with: parameters)
+        return """
+        struct DraggableCircle: View {
+            @State private var offset: CGSize = .zero
+            @State private var isDragging = false
+
+            var body: some View {
+                Circle()
+                    .fill(Color.purple)
+                    .frame(width: 80, height: 80)
+                    .scaleEffect(isDragging ? 1.1 : 1.0)
+                    .offset(offset)
+                    .gesture(
+                        DragGesture()
+                            .onChanged { value in
+                                isDragging = true
+                                offset = value.translation
+                            }
+                            .onEnded { _ in
+                                isDragging = false
+                                withAnimation(\(animCode)) {
+                                    offset = .zero
+                                }
+                            }
+                    )
+            }
+        }
+        """
+    }
+
     var body: some View {
         ExampleCardContainer(
             example: example,
             animationType: $animationType,
-            parameters: $parameters
+            parameters: $parameters,
+            fullCode: simplifiedCode
         ) {
             GeometryReader { geometry in
                 ZStack {

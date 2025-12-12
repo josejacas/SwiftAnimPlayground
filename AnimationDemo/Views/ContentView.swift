@@ -27,12 +27,10 @@ struct ContentView: View {
 
     private var sidebar: some View {
         List(selection: $selectedMode) {
-            Section("Modes") {
                 ForEach(AppMode.allCases) { mode in
                     Label(mode.rawValue, systemImage: mode.icon)
                         .tag(mode)
                 }
-            }
         }
         .listStyle(.sidebar)
         .navigationSplitViewColumnWidth(min: 180, ideal: 200, max: 250)

@@ -10,6 +10,7 @@ struct ExampleCardContainer<Content: View>: View {
     @Binding var animationType: AnimationTypeOption
     @Binding var parameters: [String: Double]
     var codeSuffix: String
+    var fullCode: String
     let content: () -> Content
 
     init(
@@ -17,26 +18,36 @@ struct ExampleCardContainer<Content: View>: View {
         animationType: Binding<AnimationTypeOption>,
         parameters: Binding<[String: Double]>,
         codeSuffix: String = "",
+        fullCode: String = "",
         @ViewBuilder content: @escaping () -> Content
     ) {
         self.example = example
         self._animationType = animationType
         self._parameters = parameters
         self.codeSuffix = codeSuffix
+        self.fullCode = fullCode
         self.content = content
     }
 
     var body: some View {
         VStack(spacing: 16) {
             // Title and description
-            VStack(spacing: 6) {
-                Text(example.rawValue)
-                    .font(.title2)
-                    .fontWeight(.bold)
+            HStack(alignment: .top) {
+                VStack(spacing: 6) {
+                    Text(example.rawValue)
+                        .font(.title2)
+                        .fontWeight(.bold)
 
-                Text(example.description)
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    Text(example.description)
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
+
+                Spacer()
+
+                if !fullCode.isEmpty {
+                    ViewCodeButton(title: "\(example.rawValue) Example", code: fullCode)
+                }
             }
 
             // Interactive animation area

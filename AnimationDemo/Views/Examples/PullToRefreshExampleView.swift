@@ -14,11 +14,63 @@ struct PullToRefreshExampleView: View {
     private let example = ExampleType.pullToRefresh
     private let threshold: CGFloat = 80
 
+    private var simplifiedCode: String {
+        let animCode = animationType.codeString(with: parameters)
+        return """
+        struct PullToRefreshView: View {
+            @State private var pullOffset: CGFloat = 0
+            @State private var isRefreshing = false
+            let threshold: CGFloat = 60
+
+            var body: some View {
+                VStack {
+                    // Refresh indicator
+                    ProgressView()
+                        .opacity(pullOffset > 20 ? 1 : 0)
+                        .offset(y: min(pullOffset * 0.5, threshold))
+
+                    // Your content here
+                    Text("Pull me down!")
+                        .padding(.top, 40)
+                        .offset(y: pullOffset * 0.3)
+
+                    Spacer()
+                }
+                .gesture(
+                    DragGesture()
+                        .onChanged { value in
+                            if value.translation.height > 0 && !isRefreshing {
+                                pullOffset = value.translation.height * 0.5
+                            }
+                        }
+                        .onEnded { _ in
+                            if pullOffset > threshold {
+                                isRefreshing = true
+                                // Simulate refresh
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                    isRefreshing = false
+                                    withAnimation(\(animCode)) {
+                                        pullOffset = 0
+                                    }
+                                }
+                            } else {
+                                withAnimation(\(animCode)) {
+                                    pullOffset = 0
+                                }
+                            }
+                        }
+                )
+            }
+        }
+        """
+    }
+
     var body: some View {
         ExampleCardContainer(
             example: example,
             animationType: $animationType,
-            parameters: $parameters
+            parameters: $parameters,
+            fullCode: simplifiedCode
         ) {
             VStack(spacing: 0) {
                 // Refresh indicator

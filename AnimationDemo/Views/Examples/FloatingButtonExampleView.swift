@@ -20,12 +20,67 @@ struct FloatingButtonExampleView: View {
         ("mic.fill", .pink, "Audio")
     ]
 
+    private var simplifiedCode: String {
+        let animCode = animationType.codeString(with: parameters)
+        let stagger = String(format: "%.2f", staggerDelay)
+        return """
+        struct FloatingActionButton: View {
+            @State private var isExpanded = false
+
+            let menuItems = ["camera.fill", "photo.fill", "doc.fill", "mic.fill"]
+
+            var body: some View {
+                ZStack {
+                    // Menu items
+                    ForEach(Array(menuItems.enumerated()), id: \\.offset) { index, icon in
+                        menuButton(icon: icon, index: index)
+                    }
+
+                    // Main button
+                    Button {
+                        withAnimation(\(animCode)) {
+                            isExpanded.toggle()
+                        }
+                    } label: {
+                        Circle()
+                            .fill(Color.orange)
+                            .frame(width: 56, height: 56)
+                            .overlay(
+                                Image(systemName: "plus")
+                                    .foregroundStyle(.white)
+                                    .rotationEffect(.degrees(isExpanded ? 45 : 0))
+                            )
+                    }
+                }
+            }
+
+            func menuButton(icon: String, index: Int) -> some View {
+                let angle = -150.0 + Double(index) * 40.0
+                let distance: CGFloat = isExpanded ? 100 : 0
+                let radians = angle * .pi / 180
+
+                return Button { isExpanded = false } label: {
+                    Circle()
+                        .fill(Color.blue)
+                        .frame(width: 44, height: 44)
+                        .overlay(Image(systemName: icon).foregroundStyle(.white))
+                }
+                .offset(x: cos(radians) * distance, y: sin(radians) * distance)
+                .scaleEffect(isExpanded ? 1 : 0.3)
+                .opacity(isExpanded ? 1 : 0)
+                .animation(\(animCode).delay(Double(index) * \(stagger)), value: isExpanded)
+            }
+        }
+        """
+    }
+
     var body: some View {
         ExampleCardContainer(
             example: example,
             animationType: $animationType,
             parameters: $parameters,
-            codeSuffix: ".delay(i * \(String(format: "%.2f", staggerDelay)))"
+            codeSuffix: ".delay(i * \(String(format: "%.2f", staggerDelay)))",
+            fullCode: simplifiedCode
         ) {
             VStack {
                 Spacer()

@@ -66,7 +66,24 @@ struct InteractiveCodeEditor: View {
             .padding(.vertical, 12)
             .background(Color.gray.opacity(0.08))
             .cornerRadius(10)
+            .contentShape(Rectangle())
+            .onTapGesture {
+                // Dismiss editing when tapping on background
+                if editingParameter != nil {
+                    commitCurrentEdit()
+                }
+            }
         }
+    }
+
+    private func commitCurrentEdit() {
+        if let paramName = editingParameter,
+           let paramDef = animationType.parameters.first(where: { $0.name == paramName }),
+           let newValue = Double(editText) {
+            let clamped = min(max(newValue, paramDef.range.lowerBound), paramDef.range.upperBound)
+            parameters[paramName] = clamped
+        }
+        editingParameter = nil
     }
 
     @ViewBuilder
@@ -164,6 +181,9 @@ struct InlineTextField: NSViewRepresentable {
         // Store reference for later
         context.coordinator.textField = textField
 
+        // Add click monitor to detect clicks outside
+        context.coordinator.setupClickMonitor()
+
         return textField
     }
 
@@ -184,10 +204,13 @@ struct InlineTextField: NSViewRepresentable {
                     if let editor = nsView.currentEditor() {
                         editor.selectAll(nil)
                     }
-                    context.coordinator.isActive = true
                 }
             }
         }
+    }
+
+    static func dismantleNSView(_ nsView: NSTextField, coordinator: Coordinator) {
+        coordinator.removeClickMonitor()
     }
 
     func makeCoordinator() -> Coordinator {
@@ -197,11 +220,38 @@ struct InlineTextField: NSViewRepresentable {
     class Coordinator: NSObject, NSTextFieldDelegate {
         var parent: InlineTextField
         var didInitialFocus = false
-        var isActive = false
+        var didCommit = false
         weak var textField: NSTextField?
+        var clickMonitor: Any?
 
         init(_ parent: InlineTextField) {
             self.parent = parent
+        }
+
+        func setupClickMonitor() {
+            clickMonitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseDown) { [weak self] event in
+                guard let self = self, let textField = self.textField else { return event }
+
+                // Check if click is outside the text field
+                let locationInTextField = textField.convert(event.locationInWindow, from: nil)
+                if !textField.bounds.contains(locationInTextField) {
+                    // Click is outside - commit and resign
+                    if !self.didCommit {
+                        self.didCommit = true
+                        DispatchQueue.main.async {
+                            self.parent.onCommit()
+                        }
+                    }
+                }
+                return event
+            }
+        }
+
+        func removeClickMonitor() {
+            if let monitor = clickMonitor {
+                NSEvent.removeMonitor(monitor)
+                clickMonitor = nil
+            }
         }
 
         func controlTextDidChange(_ obj: Notification) {
@@ -210,22 +260,31 @@ struct InlineTextField: NSViewRepresentable {
         }
 
         func controlTextDidEndEditing(_ obj: Notification) {
-            // Only commit if we've been properly activated
-            if isActive {
+            // Commit when focus is lost
+            if !didCommit {
+                didCommit = true
                 parent.onCommit()
             }
         }
 
         func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
             if commandSelector == #selector(NSResponder.insertNewline(_:)) {
-                parent.onCommit()
+                if !didCommit {
+                    didCommit = true
+                    parent.onCommit()
+                }
                 return true
             }
             if commandSelector == #selector(NSResponder.cancelOperation(_:)) {
+                didCommit = true
                 parent.onCancel()
                 return true
             }
             return false
+        }
+
+        deinit {
+            removeClickMonitor()
         }
     }
 }

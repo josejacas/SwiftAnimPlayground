@@ -12,11 +12,39 @@ struct ToggleSwitchExampleView: View {
 
     private let example = ExampleType.toggleSwitch
 
+    private var simplifiedCode: String {
+        """
+        struct ToggleSwitchView: View {
+            @State private var isOn = false
+
+            var body: some View {
+                ZStack {
+                    Capsule()
+                        .fill(isOn ? Color.green : Color.gray.opacity(0.3))
+                        .frame(width: 60, height: 34)
+
+                    Circle()
+                        .fill(.white)
+                        .shadow(radius: 2)
+                        .frame(width: 28, height: 28)
+                        .offset(x: isOn ? 13 : -13)
+                }
+                .onTapGesture {
+                    withAnimation(\(animationType.codeString(with: parameters))) {
+                        isOn.toggle()
+                    }
+                }
+            }
+        }
+        """
+    }
+
     var body: some View {
         ExampleCardContainer(
             example: example,
             animationType: $animationType,
-            parameters: $parameters
+            parameters: $parameters,
+            fullCode: simplifiedCode
         ) {
             ZStack {
                 Capsule()
