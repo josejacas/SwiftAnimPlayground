@@ -17,6 +17,8 @@ struct ContentView: View {
                 PlaygroundView()
             case .compare:
                 CompareView()
+            case .examples:
+                ExamplesView()
             }
         }
     }
