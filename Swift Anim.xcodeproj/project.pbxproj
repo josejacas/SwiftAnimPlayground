@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		5A70A4642EEC24E000045F74 /* AnimationDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AnimationDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5A70A4642EEC24E000045F74 /* Swift Anim.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Swift Anim.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -40,7 +40,7 @@
 		5A70A4652EEC24E000045F74 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5A70A4642EEC24E000045F74 /* AnimationDemo.app */,
+				5A70A4642EEC24E000045F74 /* Swift Anim.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,9 +48,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5A70A4632EEC24E000045F74 /* AnimationDemo */ = {
+		5A70A4632EEC24E000045F74 /* Swift Anim */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5A70A46F2EEC24E100045F74 /* Build configuration list for PBXNativeTarget "AnimationDemo" */;
+			buildConfigurationList = 5A70A46F2EEC24E100045F74 /* Build configuration list for PBXNativeTarget "Swift Anim" */;
 			buildPhases = (
 				5A70A4602EEC24E000045F74 /* Sources */,
 				5A70A4612EEC24E000045F74 /* Frameworks */,
@@ -63,11 +63,11 @@
 			fileSystemSynchronizedGroups = (
 				5A70A4662EEC24E000045F74 /* AnimationDemo */,
 			);
-			name = AnimationDemo;
+			name = "Swift Anim";
 			packageProductDependencies = (
 			);
 			productName = AnimationDemo;
-			productReference = 5A70A4642EEC24E000045F74 /* AnimationDemo.app */;
+			productReference = 5A70A4642EEC24E000045F74 /* Swift Anim.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -85,7 +85,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 5A70A45F2EEC24E000045F74 /* Build configuration list for PBXProject "Swift Animation Playground" */;
+			buildConfigurationList = 5A70A45F2EEC24E000045F74 /* Build configuration list for PBXProject "Swift Anim" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -99,7 +99,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5A70A4632EEC24E000045F74 /* AnimationDemo */,
+				5A70A4632EEC24E000045F74 /* Swift Anim */,
 			);
 		};
 /* End PBXProject section */
@@ -320,7 +320,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5A70A45F2EEC24E000045F74 /* Build configuration list for PBXProject "Swift Animation Playground" */ = {
+		5A70A45F2EEC24E000045F74 /* Build configuration list for PBXProject "Swift Anim" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5A70A46D2EEC24E100045F74 /* Debug */,
@@ -329,7 +329,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5A70A46F2EEC24E100045F74 /* Build configuration list for PBXNativeTarget "AnimationDemo" */ = {
+		5A70A46F2EEC24E100045F74 /* Build configuration list for PBXNativeTarget "Swift Anim" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5A70A4702EEC24E100045F74 /* Debug */,
