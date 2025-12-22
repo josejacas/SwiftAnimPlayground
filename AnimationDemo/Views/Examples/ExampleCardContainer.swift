@@ -33,7 +33,7 @@ struct ExampleCardContainer<Content: View>: View {
         VStack(spacing: 16) {
             // Title and description
             HStack(alignment: .top) {
-                VStack(spacing: 6) {
+                VStack(alignment: .leading, spacing: 6) {
                     Text(example.rawValue)
                         .font(.title2)
                         .fontWeight(.bold)
@@ -68,16 +68,5 @@ struct ExampleCardContainer<Content: View>: View {
             )
         }
         .padding(24)
-        .background(cardBackground)
-    }
-
-    private var cardBackground: some View {
-        RoundedRectangle(cornerRadius: 20)
-            .fill(.background)
-            .shadow(color: .black.opacity(0.08), radius: 12, y: 4)
-            .overlay(
-                RoundedRectangle(cornerRadius: 20)
-                    .stroke(example.accentColor.opacity(0.15), lineWidth: 1)
-            )
     }
 }

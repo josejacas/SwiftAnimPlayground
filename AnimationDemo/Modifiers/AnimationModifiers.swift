@@ -18,10 +18,10 @@ struct AnimationModifier: ViewModifier {
                 .scaleEffect(isAnimated ? 2.5 : 1.0)
         case .movement:
             content
-                .offset(x: isAnimated ? 50 : -50)
+                .offset(x: isAnimated ? 80 : -80)
         case .rotation:
             content
-                .rotationEffect(.degrees(isAnimated ? 180 : 0))
+                .rotationEffect(.degrees(isAnimated ? 360 : 0))
         }
     }
 }

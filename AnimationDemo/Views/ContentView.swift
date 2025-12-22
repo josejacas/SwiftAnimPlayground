@@ -19,6 +19,8 @@ struct ContentView: View {
                 CompareView()
             case .examples:
                 ExamplesView()
+            case .curveCreator:
+                CurveCreatorView()
             }
         }
     }
