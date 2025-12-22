@@ -23,17 +23,27 @@ struct InteractiveCurveEditor: View {
     private let minY: Double = -2.0
     private let maxY: Double = 3.0
 
+    // Extra vertical space for handles to overflow into
+    private let overflowPadding: CGFloat = 60
+
     var body: some View {
         GeometryReader { geometry in
+            // The graph rect stays within the visible background area
             let graphRect = CGRect(
                 x: padding,
-                y: padding / 2,
+                y: overflowPadding + padding / 2,
                 width: geometry.size.width - padding * 1.5,
-                height: geometry.size.height - padding
+                height: geometry.size.height - padding - overflowPadding * 2
             )
 
             ZStack {
-                // Canvas for grid, axes, and curve
+                // Background only for the main graph area (not overflow)
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color(nsColor: .controlBackgroundColor))
+                    .frame(width: size.width, height: size.height - overflowPadding * 2)
+                    .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
+
+                // Canvas for grid, axes, and curve - NOT clipped
                 Canvas { context, canvasSize in
                     drawGrid(context: context, rect: graphRect)
                     drawAxes(context: context, rect: graphRect)
@@ -66,9 +76,7 @@ struct InteractiveCurveEditor: View {
                 )
             }
         }
-        .frame(width: size.width, height: size.height)
-        .background(Color(nsColor: .controlBackgroundColor))
-        .cornerRadius(8)
+        .frame(width: size.width, height: size.height + overflowPadding * 2)
     }
 
     // MARK: - Drawing Functions

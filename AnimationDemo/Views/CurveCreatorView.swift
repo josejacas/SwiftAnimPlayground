@@ -29,8 +29,6 @@ struct CurveCreatorView: View {
                 Spacer()
                 // Left side: Preview + Editor
                 VStack(spacing: 12) {
-                    Spacer()
-
                     // Live preview
                     CurvePreviewAnimation(
                         curve: curve,
@@ -39,9 +37,8 @@ struct CurveCreatorView: View {
                         isDragging: isDragging,
                         restartTrigger: restartTrigger
                     )
+                    .padding(.top, 30)
                     .id(restartTrigger)
-
-                    Spacer()
 
                     // Interactive curve editor
                     InteractiveCurveEditor(
@@ -53,13 +50,10 @@ struct CurveCreatorView: View {
 
                     // Coordinate display for fine-tuning
                     CurveCoordinateDisplay(p1: $curve.p1, p2: $curve.p2)
-
-                    Spacer()
                 }
                 .padding(.horizontal, 20)
-                .padding(.vertical, 12)
-//                .frame(maxWidth: .infinity)
-//                .frame(minWidth: 420, maxWidth: 480)
+                .padding(.vertical, 24)
+                .frame(maxWidth: .infinity)
 
                 Divider()
 
