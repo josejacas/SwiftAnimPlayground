@@ -10,8 +10,8 @@ struct HeartReactionExampleView: View {
     @State private var heartScale: CGFloat = 1.0
 
     // Stage 1: Pop animation
-    @State private var popAnimationType: AnimationTypeOption = .snappy
-    @State private var popParameters: [String: Double] = ["duration": 0.25, "extraBounce": 0.0]
+    @State private var popAnimationType: AnimationTypeOption = .easeOut
+    @State private var popParameters: [String: Double] = ["duration": 0.2]
 
     // Stage 2: Settle animation
     @State private var settleAnimationType: AnimationTypeOption = .spring
@@ -138,18 +138,8 @@ struct HeartReactionExampleView: View {
             }
         }
         .padding(24)
-        .background(cardBackground)
     }
 
-    private var cardBackground: some View {
-        RoundedRectangle(cornerRadius: 20)
-            .fill(.background)
-            .shadow(color: .black.opacity(0.08), radius: 12, y: 4)
-            .overlay(
-                RoundedRectangle(cornerRadius: 20)
-                    .stroke(example.accentColor.opacity(0.15), lineWidth: 1)
-            )
-    }
 
     private func triggerHeartAnimation() {
         isLiked.toggle()

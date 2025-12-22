@@ -7,8 +7,8 @@ import SwiftUI
 
 struct TabBarExampleView: View {
     @State private var selectedTab: Int = 0
-    @State private var animationType: AnimationTypeOption = .spring
-    @State private var parameters: [String: Double] = ["duration": 0.4, "bounce": 0.3]
+    @State private var animationType: AnimationTypeOption = .snappy
+    @State private var parameters: [String: Double] = ["duration": 0.2, "extraBounce": 0.1]
 
     private let example = ExampleType.tabBar
 

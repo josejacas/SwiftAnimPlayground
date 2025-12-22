@@ -14,8 +14,8 @@ struct Toast: Identifiable {
 
 struct ToastNotificationExampleView: View {
     @State private var toasts: [Toast] = []
-    @State private var animationType: AnimationTypeOption = .spring
-    @State private var parameters: [String: Double] = ["duration": 0.5, "bounce": 0.3]
+    @State private var animationType: AnimationTypeOption = .smooth
+    @State private var parameters: [String: Double] = ["duration": 0.3, "bounce": 0.0]
 
     private let example = ExampleType.toastNotification
     private let maxToasts = 5

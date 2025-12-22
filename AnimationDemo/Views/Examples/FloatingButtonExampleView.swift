@@ -7,8 +7,8 @@ import SwiftUI
 
 struct FloatingButtonExampleView: View {
     @State private var isExpanded = false
-    @State private var animationType: AnimationTypeOption = .spring
-    @State private var parameters: [String: Double] = ["duration": 0.4, "bounce": 0.3]
+    @State private var animationType: AnimationTypeOption = .snappy
+    @State private var parameters: [String: Double] = ["duration": 0.3, "extraBounce": 0.3]
     @State private var staggerDelay: Double = 0.05
 
     private let example = ExampleType.floatingButton

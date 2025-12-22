@@ -7,8 +7,8 @@ import SwiftUI
 
 struct CardFlipExampleView: View {
     @State private var isFlipped = false
-    @State private var animationType: AnimationTypeOption = .spring
-    @State private var parameters: [String: Double] = ["duration": 0.6, "bounce": 0.2]
+    @State private var animationType: AnimationTypeOption = .bouncy
+    @State private var parameters: [String: Double] = ["duration": 0.4, "extraBounce": 0.2]
 
     private let example = ExampleType.cardFlip
 

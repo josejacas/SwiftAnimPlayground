@@ -8,7 +8,7 @@ import SwiftUI
 struct ToggleSwitchExampleView: View {
     @State private var isOn = false
     @State private var animationType: AnimationTypeOption = .spring
-    @State private var parameters: [String: Double] = ["duration": 0.4, "bounce": 0.3]
+    @State private var parameters: [String: Double] = ["duration": 0.2, "bounce": 0.3]
 
     private let example = ExampleType.toggleSwitch
 
