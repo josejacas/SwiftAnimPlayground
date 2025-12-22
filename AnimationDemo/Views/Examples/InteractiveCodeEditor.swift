@@ -193,17 +193,16 @@ struct InlineTextField: NSViewRepresentable {
             context.coordinator.didInitialFocus = true
 
             // Use async to ensure the view is fully in the hierarchy
-            DispatchQueue.main.async {
+            Task { @MainActor in
                 guard let window = nsView.window else { return }
 
                 // Make first responder
                 window.makeFirstResponder(nsView)
 
                 // Select all after a brief moment
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.02) {
-                    if let editor = nsView.currentEditor() {
-                        editor.selectAll(nil)
-                    }
+                try? await Task.sleep(for: .seconds(0.02))
+                if let editor = nsView.currentEditor() {
+                    editor.selectAll(nil)
                 }
             }
         }

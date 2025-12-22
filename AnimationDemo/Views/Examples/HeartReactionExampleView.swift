@@ -161,7 +161,8 @@ struct HeartReactionExampleView: View {
         }
 
         // Stage 2: Settle (return to normal)
-        DispatchQueue.main.asyncAfter(deadline: .now() + popDuration) {
+        Task { @MainActor in
+            try? await Task.sleep(for: .seconds(popDuration))
             withAnimation(settleAnimationType.buildAnimation(with: settleParameters)) {
                 heartScale = 1.0
             }

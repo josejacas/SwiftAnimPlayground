@@ -262,11 +262,12 @@ struct SwipeableCardView: View {
                             // Dismiss
                             let direction: CGFloat = value.translation.width > 0 ? 1 : -1
                             withAnimation(dismissAnimationType.buildAnimation(with: dismissParameters)) {
-                                offset.width = direction * 1000
+                                offset.width = direction * 750
                                 offset.height = value.translation.height
                                 rotation = Double(direction * 30)
                             }
-                            DispatchQueue.main.asyncAfter(deadline: .now() + dismissDuration) {
+                            Task { @MainActor in
+                                try? await Task.sleep(for: .seconds(dismissDuration))
                                 onSwipe()
                             }
                         } else {

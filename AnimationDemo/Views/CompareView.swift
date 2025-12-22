@@ -373,7 +373,8 @@ struct CompareView: View {
             }
         }
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + globalDuration + holdDuration) {
+        Task { @MainActor in
+            try? await Task.sleep(for: .seconds(globalDuration + holdDuration))
             for index in slots.indices {
                 withAnimation(slots[index].animation(duration: globalDuration)) {
                     slots[index].isAnimated = false

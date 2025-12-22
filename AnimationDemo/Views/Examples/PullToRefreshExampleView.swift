@@ -159,7 +159,8 @@ struct PullToRefreshExampleView: View {
                     }
 
                     // Simulate refresh completion
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    Task { @MainActor in
+                        try? await Task.sleep(for: .seconds(1.5))
                         isRefreshing = false
                         withAnimation(animationType.buildAnimation(with: parameters)) {
                             pullOffset = 0

@@ -41,7 +41,8 @@ struct CurvePreviewAnimation: View {
                 // Immediately restart when preset is selected
                 stopLoop()
                 isAnimated = false
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                Task { @MainActor in
+                    try? await Task.sleep(for: .seconds(0.05))
                     startLoop()
                 }
             }
@@ -100,7 +101,8 @@ struct CurvePreviewAnimation: View {
             isAnimated = true
         }
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + curve.duration + holdDuration) {
+        Task { @MainActor in
+            try? await Task.sleep(for: .seconds(curve.duration + holdDuration))
             withAnimation(animation) {
                 isAnimated = false
             }

@@ -202,7 +202,8 @@ struct InteractiveSpringDemoView: View {
         NSPasteboard.general.clearContents()
         NSPasteboard.general.setString(".animation(\(codeString), value: trigger)", forType: .string)
         showCopied = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+        Task { @MainActor in
+            try? await Task.sleep(for: .seconds(1.5))
             showCopied = false
         }
     }

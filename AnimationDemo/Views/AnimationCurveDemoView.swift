@@ -167,7 +167,8 @@ struct AnimationCurveDemoView: View {
         withAnimation(animation) {
             isAnimated = true
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + duration + holdDuration) {
+        Task { @MainActor in
+            try? await Task.sleep(for: .seconds(duration + holdDuration))
             withAnimation(animation) {
                 isAnimated = false
             }

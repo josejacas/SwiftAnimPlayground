@@ -194,7 +194,8 @@ struct ToastNotificationExampleView: View {
 
         // Auto-dismiss after delay
         let toastId = toast.id
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
+        Task { @MainActor in
+            try? await Task.sleep(for: .seconds(4.0))
             withAnimation(animationType.buildAnimation(with: parameters)) {
                 toasts.removeAll { $0.id == toastId }
             }

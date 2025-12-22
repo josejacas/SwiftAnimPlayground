@@ -64,7 +64,8 @@ struct CurveCodeExport: View {
             showCopied = true
         }
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+        Task { @MainActor in
+            try? await Task.sleep(for: .seconds(1.5))
             withAnimation(.easeInOut(duration: 0.2)) {
                 showCopied = false
             }
