@@ -17,6 +17,14 @@ Compare up to three animation curves side-by-side:
 - **Stacked or Side-by-Side**: Toggle between layout modes
 - **Synchronized Playback**: All animations play together for easy comparison
 
+### Curve Creator
+Design custom cubic Bézier timing curves with precision:
+- **Interactive Graph Editor**: Drag control points P1 and P2 to shape your curve
+- **Extended Y Range**: Support for overshoot (values > 1) and anticipation (values < 0) effects
+- **Preset Library**: Quick access to standard easing curves and cubic variations
+- **Live Preview**: See your custom curve applied to animations in real-time
+- **Code Export**: Copy the exact `.timingCurve()` code for your SwiftUI project
+
 ### Examples
 Real-world animation patterns with interactive, editable code:
 
@@ -27,6 +35,12 @@ Real-world animation patterns with interactive, editable code:
 | **Drag & Release** | Physics-based spring return using `interpolatingSpring` |
 | **Heart Reaction** | Two-stage animation (pop + settle) demonstrating concatenated animations |
 | **Pull to Refresh** | Gesture-driven spring animation |
+| **Tab Bar** | Animated selection indicator with spring transitions |
+| **Toast Notification** | Stacking notifications with spring entry/exit |
+| **Card Stack** | Tinder-style swipeable cards with rotation and spring physics |
+| **Card Flip** | 3D flip animation with perspective using `rotation3DEffect` |
+| **Morphing Shape** | Custom shapes with `animatableData` for smooth morphing |
+| **Hero Animation** | Shared element transitions using `matchedGeometryEffect` |
 
 Each example features:
 - **Interactive Code Editor**: Tap animation types and parameter values to modify them directly
